@@ -60,7 +60,7 @@ public void OnPluginStart()
 
 public Action Command_LandFix(int client, int args)
 {
-	if(client == 0) return Plugin_Handled;
+	if(!IsValidClient(client)) return Plugin_Handled;
 	PrintToChat(client, "[SM] This LandFix is always enabled and does NOT cause time loss, so no need to enable or change it (:");
 	return Plugin_Handled;
 }
@@ -128,4 +128,9 @@ void GetGroundPosition(int client, float origin[3], float out[3])
 public bool PlayerFilter(int entity, int mask)
 {
 	return !(1 <= entity <= MaxClients);
+}
+
+public bool IsValidClient(int client)
+{
+	return (client >= 1 && client <= MaxClients && IsClientInGame(client) && !IsClientSourceTV(client));
 }
